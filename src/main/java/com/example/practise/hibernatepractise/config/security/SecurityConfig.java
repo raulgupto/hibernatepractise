@@ -43,9 +43,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception{
-        httpSecurity.csrf().ignoringAntMatchers("/test/**").and()
+        httpSecurity.csrf().ignoringAntMatchers("/test/**","/movies/**").and()
                 .authorizeRequests()
                 .antMatchers( "/test/*").permitAll()
+                .antMatchers("/movies/**").hasAnyRole( "USER")
                 .antMatchers("/user/**").hasAnyRole("ADMIN", "USER")
 //                .antMatchers("/**").hasRole("ADMIN") -> this says everything can be only accessed by admin
                 .and().formLogin();
